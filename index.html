@@ -205,7 +205,7 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
 .day-info p{font-size:11px;color:var(--gray);margin-top:1px;}
 .chevron{font-size:16px;color:var(--muted);transition:transform 0.25s;}
 .day-card.open .chevron{transform:rotate(180deg);}
-.day-body{display:none;padding:0 0 14px;transform-origin:center top;}
+.day-body{display:none;}
 .warmup{display:flex;align-items:flex-start;gap:8px;padding:10px 14px;background:rgba(255,78,0,0.04);border-bottom:1px solid rgba(0,0,0,0.05);border-top:1px solid rgba(0,0,0,0.05);margin-bottom:8px;}
 .warmup p{font-size:11px;color:var(--gray);line-height:1.5;}
 .ex-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
@@ -761,31 +761,7 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
 .ex-modal-save-btn::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.7),transparent);}
 
 
-/* FORCE DAY CARD OVERRIDE */
-.day-card {
-  background: rgba(255,255,255,0.11) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(255,255,255,0.3) !important;
-  border-left: none !important;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(255,255,255,0.1), inset 0 0 20px 10px rgba(255,255,255,1) !important;
-  margin-bottom: 8px !important;
-  border-radius: 14px !important;
-  overflow: hidden !important;
-  position: relative !important;
-}
-.day-card::before {
-  content: '' !important;
-  position: absolute !important;
-  top: 0 !important; left: 0 !important; right: 0 !important;
-  height: 1px !important;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent) !important;
-  pointer-events: none !important;
-  z-index: 1 !important;
-}
-.day-header {
-  padding: 10px 14px !important;
-}
+
 
 
 
@@ -859,56 +835,23 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
 
 
 /* ===== SESSIONS STRIP ===== */
-.sessions-section { padding: 0 12px 8px; }
-.sessions-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-.sessions-strip {
-  display: flex; gap: 8px;
-  overflow-x: auto; -webkit-overflow-scrolling: touch;
-  padding-bottom: 4px;
-  scrollbar-width: none;
-}
-.sessions-strip::-webkit-scrollbar { display: none; }
-
-.session-card {
-  flex: 0 0 100px; height: 110px;
-  background: rgba(255,255,255,0.14);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.3);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(255,255,255,0.1), inset 0 0 20px 10px rgba(255,255,255,0.9);
-  padding: 10px;
-  cursor: pointer;
-  position: relative; overflow: hidden;
-  display: flex; flex-direction: column; justify-content: space-between;
-  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
-}
-.session-card::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.9),transparent); }
-.session-card::after { content:''; position:absolute; top:0; left:0; width:1px; height:100%; background:linear-gradient(180deg,rgba(255,255,255,0.8),transparent,rgba(255,255,255,0.3)); }
-.session-card:active { transform: scale(0.97); }
-
-.session-card-today {
-  flex: 0 0 130px;
-  background: rgba(255,78,0,0.1);
-  box-shadow: 0 8px 32px rgba(255,78,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6), inset 0 0 20px 10px rgba(255,255,255,0.8);
-}
-
-.session-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-.session-letter {
-  width: 28px; height: 28px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Barlow Condensed',sans-serif; font-size: 14px; font-weight: 900; color: #fff;
-  flex-shrink: 0;
-}
-.session-card-name { font-family: 'Barlow Condensed',sans-serif; font-size: 13px; font-weight: 900; color: var(--black); text-transform: uppercase; letter-spacing: 0.3px; line-height: 1.1; flex: 1; }
-.session-card-meta { font-size: 9px; color: var(--gray); margin-top: 2px; }
-.session-card-time { font-size: 9px; color: var(--muted); font-weight: 700; }
-.session-today-pill {
-  position: absolute; top: 8px; right: 8px;
-  font-size: 7px; font-weight: 900; letter-spacing: 1.5px;
-  color: var(--orange); background: rgba(255,78,0,0.12);
-  border: 1px solid rgba(255,78,0,0.2);
-  padding: 2px 6px; border-radius: 100px;
-}
+.sessions-section{padding:0 12px 8px;}
+.sessions-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.sessions-strip{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:none;}
+.sessions-strip::-webkit-scrollbar{display:none;}
+.session-today{flex:0 0 120px;height:128px;background:rgba(255,78,0,0.12);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.35);box-shadow:0 8px 32px rgba(255,78,0,0.12),inset 0 1px 0 rgba(255,255,255,0.6),inset 0 0 20px 10px rgba(255,255,255,0.8);border-radius:16px;padding:12px;cursor:pointer;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1);}
+.session-today::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.9),transparent);pointer-events:none;z-index:0;}
+.session-today:active{transform:scale(0.97);}
+.session-other{flex:0 0 90px;height:108px;background:rgba(255,255,255,0.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.3);box-shadow:0 8px 32px rgba(0,0,0,0.06),inset 0 1px 0 rgba(255,255,255,0.5),inset 0 0 20px 10px rgba(255,255,255,0.9);border-radius:14px;padding:10px;cursor:pointer;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;opacity:0.85;transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1);}
+.session-other::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.9),transparent);pointer-events:none;z-index:0;}
+.session-other:active{transform:scale(0.97);}
+.sc-top{display:flex;align-items:center;justify-content:space-between;}
+.sc-letter{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;}
+.sc-hoy{font-size:8px;font-weight:900;letter-spacing:1.5px;color:var(--orange);background:rgba(255,78,0,0.12);border:1px solid rgba(255,78,0,0.2);padding:2px 6px;border-radius:100px;}
+.sc-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--black);line-height:1.1;margin-top:4px;}
+.session-today .sc-name{font-size:17px;}
+.sc-sub{font-size:9px;color:var(--gray);margin-top:2px;}
+.sc-time{font-size:9px;color:var(--muted);font-weight:700;}
 
 </style>
 </head>
@@ -1199,7 +1142,7 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
     <div class="trigger-ico" id="menuTriggerIco">⊕</div>
   </div>
 
-  <div class="active-section-label" id="activeSectionLabel">⚡ Rutina</div>
+  
 
   <div class="content">
 
@@ -1207,35 +1150,19 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
     <div id="rutina" class="section active">
       <div class="bento-grid">
 
-        <!-- ROW 1: Today + Racha -->
+        <!-- ROW 1: Stats -->
         <div class="bento-row">
-          <div id="todayHero" class="bento-today glass-orange" style="display:none;">
-            <div class="bento-label">▶ Hoy toca</div>
-            <div class="bento-title" id="todayHeroTitle">—</div>
-            <div class="bento-sub" id="todayHeroSub">—</div>
-            <button onclick="openTodaySession()" class="today-start-btn">Empezar sesión</button>
-          </div>
-          <div id="restHero" class="bento-today glass-card" style="display:none;flex:1;">
-            <div class="bento-label" style="color:var(--muted);">HOY</div>
-            <div class="bento-title" id="restHeroMsg">Hoy descansás</div>
-            <div class="bento-sub" id="restHeroSub">El cuerpo trabaja aunque vos no.</div>
-            <button onclick="quickSessionAny()" class="today-start-btn" style="background:rgba(60,60,60,0.75);">+ Entrené igual</button>
-          </div>
           <div class="bento-racha glass-card">
             <div id="rachaIco" style="font-size:20px;line-height:1;">🔥</div>
             <div class="bento-racha-num" id="rachaNum">—</div>
             <div class="bento-racha-lbl">días</div>
           </div>
-        </div>
-
-        <!-- ROW 2: Peso + Semana -->
-        <div class="bento-row">
           <div class="bento-peso glass-card">
             <div class="bento-label">Peso</div>
             <div><span class="bento-peso-val" id="statPesoActual">—</span><span class="bento-peso-unit"> kg</span></div>
             <div class="bento-peso-diff" id="pesoDiff" style="display:none"></div>
           </div>
-          <div class="bento-semana glass-card">
+          <div class="bento-semana glass-card" style="flex:1;">
             <div class="bento-label">Esta semana</div>
             <div id="calendarWrap" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:6px;"></div>
           </div>
@@ -1309,9 +1236,9 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
       <div class="sh"><h2>Nutrición</h2><div class="sl"></div></div>
       <div class="cal-hero" id="dietHero"><div class="cal-row"><div><div class="cal-label">Objetivo diario</div><div class="cal-main" id="dietKcal">—<span style="font-size:18px;opacity:0.7"> kcal</span></div></div><div style="text-align:right"><div class="cal-sub" id="dietTdee">—</div><div class="cal-sub" id="dietSuperavit">—</div></div></div></div>
       <div class="macros" id="macrosWrap">
-        <div class="macro"><div class="macro-val" id="macroProt">—<span class="macro-unit">g</span></div><div class="macro-name">Proteína</div></div>
-        <div class="macro"><div class="macro-val" id="macroCarb">—<span class="macro-unit">g</span></div><div class="macro-name">Carbos</div></div>
-        <div class="macro"><div class="macro-val" id="macroGrasa">—<span class="macro-unit">g</span></div><div class="macro-name">Grasa</div></div>
+        <div class="macro"><div class="macro-val" id="dietMacroProt">—<span class="macro-unit">g</span></div><div class="macro-name">Proteína</div></div>
+        <div class="macro"><div class="macro-val" id="dietMacroCarb">—<span class="macro-unit">g</span></div><div class="macro-name">Carbos</div></div>
+        <div class="macro"><div class="macro-val" id="dietMacroGrasa">—<span class="macro-unit">g</span></div><div class="macro-name">Grasa</div></div>
       </div>
       <div id="allergyNote" class="allergyNote"></div>
       <div class="day-toggle"><button class="dtog active" id="dt-e" onclick="setDiet('entreno')">⚡ Entreno</button><button class="dtog" id="dt-d" onclick="setDiet('descanso')">😴 Descanso</button></div>
@@ -2017,30 +1944,10 @@ async function setQuickCard() {
     btn.textContent = '✓ Hice el entreno';
 
     // Show today hero
-    const th = document.getElementById('todayHero');
-    const rh = document.getElementById('restHero');
-    if (th) {
-      th.style.display = 'block';
-      document.getElementById('todayHeroTitle').textContent = 'Sesión ' + todaySession.id + ' — ' + todaySession.name;
-      document.getElementById('todayHeroSub').textContent = todaySession.muscle + ' · ~50 min';
-    }
-    if (rh) rh.style.display = 'none';
+    // todayHero/restHero removed - session cards handle today display
+    
 
-    // Highlight today's day card
-    const todayCard = document.getElementById('day' + todaySession.id);
-    if (todayCard) {
-      todayCard.style.order = '-1';
-      todayCard.classList.add('today-session');
-      // Add today label
-      const existingLabel = todayCard.querySelector('.today-label');
-      if (!existingLabel) {
-        const label = document.createElement('div');
-        label.className = 'today-label';
-        label.style.cssText = 'background:#2e7d32;color:#fff;font-family:Barlow Condensed,sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;';
-        label.textContent = '▶ HOY';
-        todayCard.insertBefore(label, todayCard.firstChild);
-      }
-    }
+    // Today card is already styled via isTodaySession in renderRoutine
   } else {
     // Rest day
     title.textContent = 'Día de descanso';
@@ -2051,17 +1958,8 @@ async function setQuickCard() {
     btn.onclick = function() { quickSessionAny(); };
 
     // Show rest hero in bento
-    const th = document.getElementById('todayHero');
-    const rh = document.getElementById('restHero');
-    if (th) th.style.display = 'none';
-    if (rh) {
-      rh.style.cssText = 'display:flex !important; flex:1;';
-      const rhMsg = document.getElementById('restHeroMsg');
-      const rhSub = document.getElementById('restHeroSub');
-      if (rhMsg) rhMsg.textContent = 'Hoy descansás';
-      if (rhSub) rhSub.textContent = 'El cuerpo trabaja aunque vos no.';
-    }
-    if (th) th.style.cssText = 'display:none !important;';
+    // todayHero/restHero removed - session cards handle today display
+    
 
     // Check if yesterday was also rest
     const yesterday = new Date();
@@ -2080,9 +1978,7 @@ async function setQuickCard() {
     }
   }
 
-  // Add flex order to day cards container
-  const dayCards = document.querySelectorAll('.day-card');
-  dayCards.forEach(c => { if (!c.style.order) c.style.order = '0'; });
+
 }
 
 // ============ TABS ============
@@ -2251,21 +2147,14 @@ function toggleDesc(exKey) {
 }
 
 function openTodaySession() {
-  const plan = window.currentPlan || [];
-  const day = new Date().getDay();
   const trainingDays = userProfile ? getTrainingDays(userProfile) : [1,3,5];
   const sortedDays = [...trainingDays].sort((a,b)=>a-b);
-  const sessionIndex = sortedDays.indexOf(day);
+  const sessionIndex = sortedDays.indexOf(getLocalDay());
+  const plan = window.currentPlan || [];
   const todaySession = plan[sessionIndex];
   if (!todaySession) return;
-  // Open the day card
-  const card = document.getElementById('day' + todaySession.id);
-  if (card) {
-    card.classList.add('open');
-    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-  // Switch to rutina tab if needed
-  showTab('rutina', document.querySelector('.tab'));
+  // Open session sheet directly
+  openSessionSheet(todaySession.id);
 }
 
 async function quickSessionAny() {
@@ -2659,7 +2548,17 @@ function renderRoutine(profile) {
   const plan = getRoutinePlan(place, days, objective);
 
   let html = '';
-  plan.forEach(day => {
+
+  // Today detection
+  var _todayDow = getLocalDay();
+  var _tDays = userProfile ? getTrainingDays(userProfile) : [1,3,5];
+  var _sorted = _tDays.slice().sort(function(a,b){return a-b;});
+  var _todayIdx = _sorted.indexOf(_todayDow);
+  var _lBgs = {A:'background:rgba(195,45,0,0.82)',B:'background:rgba(24,100,171,0.82)',C:'background:rgba(46,125,50,0.82)',D:'background:rgba(123,31,162,0.82)'};
+
+  plan.forEach((day, _di) => {
+    var isTodaySession = (_di === _todayIdx);
+    var letterBg = _lBgs[day.id] || _lBgs.A;
     const exRows = day.exercises.map(ex => {
       const exKey = day.id + '-' + ex.id;
       const restSecs = parseInt(ex.rest) || 90;
@@ -2683,21 +2582,20 @@ function renderRoutine(profile) {
     }).join('');
 
     html += `
-    <div class="session-card ${isTodaySession ? 'session-card-today' : ''}" id="day${day.id}" onclick="openSessionSheet('${day.id}')">
-      <div class="session-card-top">
-        <div class="session-letter" style="${letterBg}">${day.id}</div>
-        <span class="badge ${day.badgeClass||'badge-push'}">${day.badge}</span>
+    <div class="${isTodaySession ? 'session-today' : 'session-other'}" id="day${day.id}" onclick="openSessionSheet('${day.id}')">
+      <div class="sc-top">
+        <div class="sc-letter" style="${letterBg}">${day.id}</div>
+        ${isTodaySession ? '<span class="sc-hoy">HOY</span>' : ''}
       </div>
-      <div class="session-card-name">${day.name}</div>
-      <div class="session-card-meta">${day.day}</div>
-      <div class="session-card-time">~${Math.round((day.exercises||[]).length * 8) || 50} min</div>
-      ${isTodaySession ? '<div class="session-today-pill">HOY</div>' : ''}
+      <div class="sc-name">${isTodaySession ? day.name : day.badge}</div>
+      <div class="sc-sub">${isTodaySession ? day.badge : day.day}</div>
+      <div class="sc-time">~${Math.round((day.exercises||[]).length * 8)||50} min</div>
     </div>`  });
 
   var wrap = document.getElementById('dayCardsWrap');
   wrap.innerHTML = html;
   // Move today's session first
-  var todayCard = wrap.querySelector('.session-card-today');
+  var todayCard = wrap.querySelector('.session-today');
   if (todayCard && wrap.firstChild !== todayCard) {
     wrap.insertBefore(todayCard, wrap.firstChild);
   }
@@ -2816,9 +2714,9 @@ function renderDiet(profile) {
   const protG = obj === 'grasa' ? Math.round(w*2.4) : Math.round(w*2.2);
   const grasaG = Math.round(cal.total*0.25/9);
   const carbG = Math.round((cal.total - protG*4 - grasaG*9)/4);
-  document.getElementById('macroProt').innerHTML = protG + '<span class="macro-unit">g</span>';
-  document.getElementById('macroCarb').innerHTML = carbG + '<span class="macro-unit">g</span>';
-  document.getElementById('macroGrasa').innerHTML = grasaG + '<span class="macro-unit">g</span>';
+  document.getElementById('dietMacroProt').innerHTML = protG + '<span class="macro-unit">g</span>';
+  document.getElementById('dietMacroCarb').innerHTML = carbG + '<span class="macro-unit">g</span>';
+  document.getElementById('dietMacroGrasa').innerHTML = grasaG + '<span class="macro-unit">g</span>';
 
   // Build TRAINING day meals
   let entHTML = '';
@@ -3560,7 +3458,7 @@ init();
   const overlay = document.getElementById('menuOverlay');
   const items = document.querySelectorAll('.rmenu-item');
   const triggerIco = document.getElementById('menuTriggerIco');
-  const sectionLabel = document.getElementById('activeSectionLabel');
+  const sectionLabel = null; // removed
   if (!trigger) return;
   let isOpen = false;
   const radius = 118;
