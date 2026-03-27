@@ -154,7 +154,7 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
 .sl{flex:1;height:1px;background:rgba(0,0,0,0.07);}
 
 /* GLASS CARD BASE */
-.glass-card{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:var(--r);box-shadow:var(--shadow);}
+.glass-card{background:rgba(255,255,255,0.11);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:var(--r);border:1px solid rgba(255,255,255,0.3);box-shadow:0 8px 32px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.5),inset 0 -1px 0 rgba(255,255,255,0.1),inset 0 0 20px 10px rgba(255,255,255,1);position:relative;overflow:hidden;}
 
 /* TODAY HERO */
 #todayHero{display:none;background:rgba(255,78,0,0.08);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.3);box-shadow:0 8px 32px rgba(255,78,0,0.1),inset 0 1px 0 rgba(255,255,255,0.5),inset 0 -1px 0 rgba(255,255,255,0.1),inset 0 0 6px 3px rgba(255,255,255,0.3);border-radius:var(--r);padding:16px;margin-bottom:12px;}
@@ -196,7 +196,7 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
 .cal-streak strong{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--orange);}
 
 /* DAY CARDS */
-.day-card{background:rgba(255,255,255,0.08);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.3);box-shadow:0 8px 32px rgba(0,0,0,0.06),inset 0 1px 0 rgba(255,255,255,0.5),inset 0 0 6px 3px rgba(255,255,255,0.25);margin-bottom:8px;overflow:hidden;border-radius:var(--r);position:relative;}
+.day-card{background:rgba(255,255,255,0.11);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:var(--r);border:1px solid rgba(255,255,255,0.3);box-shadow:0 8px 32px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.5),inset 0 -1px 0 rgba(255,255,255,0.1),inset 0 0 20px 10px rgba(255,255,255,1);position:relative;overflow:hidden;}
 .day-card.today-card{border-color:rgba(255,78,0,0.35);box-shadow:var(--shadow-orange);}
 .day-header{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;cursor:pointer;}
 .day-left{display:flex;align-items:center;gap:10px;}
@@ -522,20 +522,22 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
 
 /* ===== GLOBAL GLASS SYSTEM ===== */
 .glass-card,.day-card,.wc-card,.profile-card,.sup,.tip,.meal-card,
-.auth-card,.ob-option,.fake-card,#todayHero,#restHero,.quick-card,
-.macro,.weekly-inner,.modal-inner{
+.auth-card,.ob-option,#todayHero,#restHero,.quick-card,
+.bento-peso,.bento-semana,.bento-macros,.bento-racha{
   position:relative;overflow:hidden;
 }
 .glass-card::before,.day-card::before,.wc-card::before,.profile-card::before,
 .sup::before,.tip::before,.auth-card::before,.ob-option::before,
-#todayHero::before,#restHero::before,.quick-card::before,.macro::before{
+#todayHero::before,#restHero::before,.quick-card::before,
+.bento-peso::before,.bento-semana::before,.bento-macros::before,.bento-racha::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,0.9),transparent);
   pointer-events:none;z-index:1;
 }
 .glass-card::after,.day-card::after,.wc-card::after,.profile-card::after,
 .sup::after,.tip::after,.auth-card::after,.ob-option::after,
-#todayHero::after,#restHero::after,.quick-card::after,.macro::after{
+#todayHero::after,#restHero::after,.quick-card::after,
+.bento-peso::after,.bento-semana::after,.bento-macros::after{
   content:'';position:absolute;top:0;left:0;width:1px;height:100%;
   background:linear-gradient(180deg,rgba(255,255,255,0.8),transparent,rgba(255,255,255,0.3));
   pointer-events:none;z-index:1;
@@ -622,7 +624,7 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
 /* glass helpers */
 .glass-card{background:rgba(255,255,255,0.08);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.3);box-shadow:0 8px 32px rgba(0,0,0,0.06),inset 0 1px 0 rgba(255,255,255,0.5),inset 0 0 6px 3px rgba(255,255,255,0.25);border-radius:var(--r);position:relative;overflow:hidden;}
 .glass-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.9),transparent);pointer-events:none;}
-.glass-orange{background:rgba(255,78,0,0.09);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.3);box-shadow:0 8px 32px rgba(255,78,0,0.1),inset 0 1px 0 rgba(255,255,255,0.5),inset 0 0 6px 3px rgba(255,255,255,0.2);border-radius:var(--r);position:relative;overflow:hidden;}
+.glass-orange{background:rgba(255,78,0,0.09);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.3);box-shadow:0 8px 32px rgba(255,78,0,0.1),inset 0 1px 0 rgba(255,255,255,0.5),inset 0 -1px 0 rgba(255,255,255,0.1),inset 0 0 20px 10px rgba(255,255,255,0.8);border-radius:var(--r);position:relative;overflow:hidden;}
 .glass-orange::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.9),transparent);pointer-events:none;}
 
 /* TODAY */
@@ -761,12 +763,12 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
 
 /* FORCE DAY CARD OVERRIDE */
 .day-card {
-  background: rgba(255,255,255,0.08) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
+  background: rgba(255,255,255,0.11) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
   border: 1px solid rgba(255,255,255,0.3) !important;
   border-left: none !important;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 0 6px 3px rgba(255,255,255,0.25) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(255,255,255,0.1), inset 0 0 20px 10px rgba(255,255,255,1) !important;
   margin-bottom: 8px !important;
   border-radius: 14px !important;
   overflow: hidden !important;
@@ -806,6 +808,9 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
 .cal-day.trained .cal-day-num{color:var(--orange);}
 .cal-dot{width:4px;height:4px;border-radius:50%;background:var(--orange);}
 .cal-dot.empty{background:transparent;}
+
+
+.cal-strip .cal-day.future { opacity: 0.45; }
 
 </style>
 </head>
@@ -1112,7 +1117,7 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
             <div class="bento-sub" id="todayHeroSub">—</div>
             <button onclick="openTodaySession()" class="today-start-btn">Empezar sesión</button>
           </div>
-          <div id="restHero" class="bento-today glass-card" style="display:none;">
+          <div id="restHero" class="bento-today glass-card" style="display:none;flex:1;">
             <div class="bento-label" style="color:var(--muted);">HOY</div>
             <div class="bento-title" id="restHeroMsg">Hoy descansás</div>
             <div class="bento-sub" id="restHeroSub">El cuerpo trabaja aunque vos no.</div>
@@ -1710,18 +1715,19 @@ async function renderCalendar() {
   if (rachaNum) rachaNum.textContent = streak > 0 ? streak : '0';
   if (rachaIco) rachaIco.textContent = streak > 2 ? '🔥' : streak > 0 ? '✦' : '·';
 
-  // 7-day strip for bento
+  // 7-day strip: 3 before + today + 3 after
   let html = '<div class="cal-strip">';
-  for (let i = 6; i >= 0; i--) {
+  for (let i = -3; i <= 3; i++) {
     const d = new Date(now);
-    d.setDate(d.getDate() - i);
+    d.setDate(d.getDate() + i);
     const dateStr = d.toLocaleDateString('es-ES');
     const dayNums = ['D','L','M','X','J','V','S'];
     const dayLetter = dayNums[d.getDay()];
     const dayNum = d.getDate();
     const isToday = i === 0;
     const isTrained = sessionDays.has(dateStr);
-    html += `<div class="cal-day${isToday?' today':''}${isTrained?' trained':''}">
+    const isFuture = i > 0;
+    html += `<div class="cal-day${isToday?' today':''}${isTrained?' trained':''}${isFuture?' future':''}">
       <div class="cal-day-lbl">${dayLetter}</div>
       <div class="cal-day-num">${dayNum}</div>
       ${isTrained ? '<div class="cal-dot"></div>' : '<div class="cal-dot empty"></div>'}
