@@ -812,6 +812,13 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
 
 .cal-strip .cal-day.future { opacity: 0.45; }
 
+
+.ex-row { cursor: pointer; transition: background 0.2s; }
+.ex-row:active { background: rgba(255,78,0,0.05); }
+.ex-td-name { max-width: 140px; }
+.ex-weight-cell { display: flex; align-items: center; gap: 4px; }
+
+.ex-modal-start{font-size:11px;color:var(--orange);font-weight:700;margin-bottom:10px;}
 </style>
 </head>
 <body>
@@ -1928,6 +1935,18 @@ async function setQuickCard() {
     btn.style.background = '#888';
     btn.onclick = function() { quickSessionAny(); };
 
+    // Show rest hero in bento
+    const th = document.getElementById('todayHero');
+    const rh = document.getElementById('restHero');
+    if (th) th.style.display = 'none';
+    if (rh) {
+      rh.style.display = 'flex';
+      const rhMsg = document.getElementById('restHeroMsg');
+      const rhSub = document.getElementById('restHeroSub');
+      if (rhMsg) rhMsg.textContent = 'Hoy descansás';
+      if (rhSub) rhSub.textContent = 'El cuerpo trabaja aunque vos no.';
+    }
+
     // Check if yesterday was also rest
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
@@ -2528,25 +2547,22 @@ function renderRoutine(profile) {
     const exRows = day.exercises.map(ex => {
       const exKey = day.id + '-' + ex.id;
       const restSecs = parseInt(ex.rest) || 90;
-      return `<tr data-ex="${exKey}" data-target="${ex.target}" data-rest="${restSecs}">
-        <td>
+      const safeNote = (ex.note||'').replace(/'/g,"\\'").replace(/"/g,'\\"');
+      const safeDesc = (ex.desc||'').replace(/'/g,"\\'").replace(/"/g,'\\"');
+      const safeStart = (ex.start||'').replace(/'/g,"\\'");
+      return `<tr data-ex="${exKey}" data-target="${ex.target}" data-rest="${restSecs}"
+        class="ex-row"
+        onclick="openExModal('${exKey}','${ex.name}','${safeNote}','${safeDesc}',${ex.series},${ex.target},'${ex.rest}','${day.id}','${day.name}','${safeStart}')">
+        <td class="ex-td-name">
           <div class="ex-name">${ex.name}</div>
           ${ex.note ? `<div class="ex-note">${ex.note}</div>` : ''}
-          <div class="ex-start">▶ ${ex.start}</div>
-          ${ex.desc ? `<div class="ex-desc" id="desc-${exKey}" style="display:none;font-size:11px;color:#555;line-height:1.5;margin-top:4px;padding:6px 8px;background:#f8f6f3;border-left:2px solid var(--orange)">${ex.desc}</div>
-          <button class="hist-btn" onclick="toggleDesc('${exKey}')">ℹ cómo hacerlo</button>` : ''}
-          <button class="hist-btn" onclick="openHist('${exKey}','${ex.name}')">historial</button>
         </td>
-        <td class="ex-stat">${ex.series}</td>
-        <td><input class="reps-input" type="number" min="1" max="120" placeholder="—" oninput="updateRec(this)"></td>
-        <td>
-          <div class="weight-cell">
-            <input class="weight-input" type="number" min="0" max="150" step="1.25" placeholder="—" oninput="updateRec(this)">
-            <span class="wu">${place === 'aire_libre' ? 'seg/rep' : 'kg'}</span>
-            <span class="rec rec-hold" id="rec-${exKey}">sin datos</span>
-          </div>
+        <td class="ex-stat">${ex.series}×${ex.target}</td>
+        <td class="ex-stat ex-weight-cell" onclick="event.stopPropagation()">
+          <input class="reps-input" type="number" min="1" max="120" placeholder="—" oninput="updateRec(this)" style="width:44px;">
+          <span class="rec rec-hold" id="rec-${exKey}"></span>
         </td>
-        <td class="ex-stat" style="cursor:pointer" onclick="startRestTimer(${restSecs})" title="Tocar para iniciar timer">${ex.rest} ⏱</td>
+        <td class="ex-stat" onclick="event.stopPropagation();startRestTimer(${restSecs})" style="cursor:pointer;white-space:nowrap;">${ex.rest}⏱</td>
       </tr>`;
     }).join('');
 
@@ -2570,7 +2586,7 @@ function renderRoutine(profile) {
         <div class="warmup"><span style="font-size:14px">🔥</span><p><strong>Calentamiento:</strong> ${day.warmup}</p></div>
         <div class="ex-wrap">
           <table class="ex-table">
-            <thead><tr><th>Ejercicio</th><th>Series</th><th>Reps</th><th>Peso</th><th>Des.</th></tr></thead>
+            <thead><tr><th>Ejercicio</th><th>S×R</th><th>Reps</th><th>Des.</th></tr></thead>
             <tbody>${exRows}</tbody>
           </table>
         </div>
@@ -3044,7 +3060,7 @@ function renderStaticRoutine(profile) {
 let currentExKey = null;
 let currentExData = null;
 
-function openExModal(exKey, exName, exNote, exDesc, series, reps, rest, sessionId, sessionName) {
+function openExModal(exKey, exName, exNote, exDesc, series, reps, rest, sessionId, sessionName, exStart) {
   currentExKey = exKey;
   const modal = document.getElementById('exModal');
   const card = document.getElementById('exModalCard');
@@ -3055,6 +3071,8 @@ function openExModal(exKey, exName, exNote, exDesc, series, reps, rest, sessionI
   document.getElementById('exModalSession').textContent = sessionName || '';
   document.getElementById('exModalName').textContent = exName || '';
   document.getElementById('exModalNote').textContent = exNote || '';
+  const startEl = document.getElementById('exModalStart');
+  if (startEl) startEl.textContent = exStart ? '▶ ' + exStart : '';
   document.getElementById('exModalSeries').textContent = series || '—';
   document.getElementById('exModalReps').textContent = reps || '—';
   document.getElementById('exModalRest').textContent = rest || '90s';
