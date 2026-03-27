@@ -1768,6 +1768,7 @@ async function renderCalendar() {
   const year = now.getFullYear();
   const month = now.getMonth();
   const today = now.getDate();
+  const todayLocal = new Date(now.getTime() - now.getTimezoneOffset()*60000);
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -1798,7 +1799,7 @@ async function renderCalendar() {
     const dayNums = ['D','L','M','X','J','V','S'];
     const dayLetter = dayNums[d.getDay()];
     const dayNum = d.getDate();
-    const isToday = i === 0;
+    const isToday = i === 0; // center day is always today
     const isTrained = sessionDays.has(dateStr);
     const isFuture = i > 0;
     html += `<div class="cal-day${isToday?' today':''}${isTrained?' trained':''}${isFuture?' future':''}">
@@ -1874,7 +1875,7 @@ async function initApp() {
   // Day label in header
   const dayNames = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
   const hdrDay = document.getElementById('hdrDayLabel');
-  if (hdrDay) hdrDay.textContent = dayNames[new Date().getDay()] + ' · Plan personalizado';
+  if (hdrDay) hdrDay.textContent = dayNames[getLocalDay()] + ' · Plan personalizado';
 
   // Stats
   const inicioEl = document.getElementById('statPesoInicio'); if (inicioEl) inicioEl.innerHTML = `${p.weight}<span>kg</span>`;
@@ -1946,9 +1947,9 @@ async function initApp() {
 
 // ============ QUICK CARD ============
 async function setQuickCard() {
-  const day = new Date().getDay();
+  const day = getLocalDay();
   const plan = window.currentPlan || [];
-  const dayOfWeek = new Date().getDay(); // 0=sun,1=mon...
+  const dayOfWeek = getLocalDay();
   const trainingDays = userProfile ? getTrainingDays(userProfile) : [1,3,5];
   const todayIsTraining = trainingDays.includes(dayOfWeek);
   // Find which session index today is (1st training day = A, 2nd = B, etc)
@@ -3253,8 +3254,10 @@ function closeExModal() {
 var currentSheetDay = null;
 
 function openSessionSheet(dayId) {
-  if (!userProfile) return;
+  console.log('openSessionSheet called with:', dayId, 'userProfile:', !!userProfile);
+  if (!userProfile) { console.log('No userProfile!'); return; }
   var fullPlan = getRoutinePlan(userProfile.training_place||'casa', userProfile.days_available||3, userProfile.objective||'masa');
+  console.log('fullPlan length:', fullPlan.length, 'looking for:', dayId);
   var day = null;
   for (var i=0; i<fullPlan.length; i++) { if (fullPlan[i].id===dayId) { day=fullPlan[i]; break; } }
   if (!day) return;
@@ -3344,6 +3347,14 @@ function closeSessionSheet() {
     document.body.style.overflow='';
     currentSheetDay=null;
   }, 350);
+}
+
+
+// Get local day of week reliably
+function getLocalDay() {
+  var now = new Date();
+  var local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+  return local.getDay();
 }
 
 // ============ MAIN INIT ============
