@@ -3258,9 +3258,15 @@ function openSessionSheet(dayId) {
   if (!userProfile) { console.log('No userProfile!'); return; }
   var fullPlan = getRoutinePlan(userProfile.training_place||'casa', userProfile.days_available||3, userProfile.objective||'masa');
   console.log('fullPlan length:', fullPlan.length, 'looking for:', dayId);
+  try {
   var day = null;
-  for (var i=0; i<fullPlan.length; i++) { if (fullPlan[i].id===dayId) { day=fullPlan[i]; break; } }
-  if (!day) return;
+  for (var i=0; i<fullPlan.length; i++) { 
+    console.log('checking day', i, fullPlan[i].id, '===', dayId, '?', fullPlan[i].id===dayId);
+    if (fullPlan[i].id===dayId) { day=fullPlan[i]; break; } 
+  }
+  if (!day) { console.log('Day not found!'); return; }
+  console.log('Day found:', day.name, 'exercises:', day.exercises ? day.exercises.length : 'MISSING');
+  } catch(e) { console.error('openSessionSheet error:', e); return; }
   currentSheetDay = day;
   var lc = {A:'rgba(195,45,0,0.82)',B:'rgba(24,100,171,0.82)',C:'rgba(46,125,50,0.82)',D:'rgba(123,31,162,0.82)'};
   var bc = {Push:'badge-push',Pull:'badge-pull',Legs:'badge-legs',Full:'badge-push'};
@@ -3300,6 +3306,8 @@ function openSessionSheet(dayId) {
     list.appendChild(div);
   });
   var sheet = document.getElementById('sessionSheet');
+  console.log('Sheet element:', sheet ? 'found' : 'NOT FOUND');
+  if (!sheet) return;
   sheet.classList.add('show');
   document.body.style.overflow = 'hidden';
   var card = document.getElementById('sessionSheetCard');
