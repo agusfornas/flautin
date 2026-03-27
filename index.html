@@ -618,7 +618,7 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
 
 
 /* ===== BENTO GRID ===== */
-.bento-grid{padding:10px 12px 6px;display:flex;flex-direction:column;gap:8px;}
+.bento-grid{padding:8px 12px 4px;display:flex;flex-direction:column;gap:6px;}
 .bento-row{display:flex;gap:8px;}
 
 /* glass helpers */
@@ -828,7 +828,6 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
 
 
 #sessionSheet{position:fixed;inset:0;z-index:180;display:none;align-items:flex-end;justify-content:center;}
-#sessionSheet.show{display:flex;}
 #sessionSheetOverlay{position:absolute;inset:0;background:rgba(246,241,235,0.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
 #sessionSheetCard{position:relative;z-index:1;width:100%;max-height:95vh;background:rgba(255,255,255,0.11);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.3);box-shadow:0 -8px 40px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.6),inset 0 0 20px 10px rgba(255,255,255,0.8);border-radius:24px 24px 0 0;overflow:hidden;transform:translateY(100%);transition:transform 0.45s cubic-bezier(0.34,1.56,0.64,1);}
 #sessionSheet.show #sessionSheetCard{transform:translateY(0);}
@@ -857,6 +856,59 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
 .sheet-ex-rec{font-size:9px;font-weight:700;min-height:12px;text-align:right;}
 .sheet-timer-btn{font-size:9px;color:var(--gray);background:rgba(255,255,255,0.08);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.25);padding:3px 8px;border-radius:100px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;text-transform:uppercase;}
 .sheet-save-btn{position:fixed;bottom:20px;left:16px;right:16px;padding:14px;background:rgba(195,45,0,0.88);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.3);box-shadow:0 8px 24px rgba(255,78,0,0.25),inset 0 1px 0 rgba(255,255,255,0.4);color:#fff;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border-radius:var(--r-pill);z-index:185;}
+
+
+/* ===== SESSIONS STRIP ===== */
+.sessions-section { padding: 0 12px 8px; }
+.sessions-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.sessions-strip {
+  display: flex; gap: 8px;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+.sessions-strip::-webkit-scrollbar { display: none; }
+
+.session-card {
+  flex: 0 0 100px; height: 110px;
+  background: rgba(255,255,255,0.14);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(255,255,255,0.1), inset 0 0 20px 10px rgba(255,255,255,0.9);
+  padding: 10px;
+  cursor: pointer;
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between;
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+.session-card::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.9),transparent); }
+.session-card::after { content:''; position:absolute; top:0; left:0; width:1px; height:100%; background:linear-gradient(180deg,rgba(255,255,255,0.8),transparent,rgba(255,255,255,0.3)); }
+.session-card:active { transform: scale(0.97); }
+
+.session-card-today {
+  flex: 0 0 130px;
+  background: rgba(255,78,0,0.1);
+  box-shadow: 0 8px 32px rgba(255,78,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6), inset 0 0 20px 10px rgba(255,255,255,0.8);
+}
+
+.session-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.session-letter {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed',sans-serif; font-size: 14px; font-weight: 900; color: #fff;
+  flex-shrink: 0;
+}
+.session-card-name { font-family: 'Barlow Condensed',sans-serif; font-size: 13px; font-weight: 900; color: var(--black); text-transform: uppercase; letter-spacing: 0.3px; line-height: 1.1; flex: 1; }
+.session-card-meta { font-size: 9px; color: var(--gray); margin-top: 2px; }
+.session-card-time { font-size: 9px; color: var(--muted); font-weight: 700; }
+.session-today-pill {
+  position: absolute; top: 8px; right: 8px;
+  font-size: 7px; font-weight: 900; letter-spacing: 1.5px;
+  color: var(--orange); background: rgba(255,78,0,0.12);
+  border: 1px solid rgba(255,78,0,0.2);
+  padding: 2px 6px; border-radius: 100px;
+}
 
 </style>
 </head>
@@ -1228,16 +1280,11 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
       </div>
 
       <!-- Day cards -->
-      <div style="padding:0 14px;">
-        <div class="sh"><h2>Detalle por sesión</h2><div class="sl"></div></div>
-        <div id="dayCardsWrap"></div>
-        <div class="glass-card" style="border-left:4px solid var(--orange);padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;">
-          <span style="font-size:22px;flex-shrink:0;">♻️</span>
-          <div>
-            <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--black);margin-bottom:3px;">Deload — cada 4–5 semanas</div>
-            <div style="font-size:11px;color:var(--gray);line-height:1.5;">Una semana al 60% del peso. Mismos ejercicios, mismas series. No es perder tiempo — es cuando el cuerpo consolida las ganancias.</div>
-          </div>
-        </div>
+      <div class="sessions-section">
+        <div class="sessions-label">Sesiones</div>
+        <div class="sessions-strip" id="dayCardsWrap"></div>
+      </div>
+
       </div>
     </div>
 
@@ -2636,21 +2683,24 @@ function renderRoutine(profile) {
     }).join('');
 
     html += `
-    <div class="day-card" id="day${day.id}" onclick="openSessionSheet('${day.id}')">
-      <div class="day-card-inner">
-        <div class="day-letter">${day.id}</div>
-        <div class="day-card-info">
-          <div class="day-card-name">${day.name}</div>
-          <div class="day-card-meta">${day.day}</div>
-        </div>
-        <div class="day-card-right">
-          <span class="badge ${day.badgeClass||'badge-push'}">${day.badge}</span>
-          <span style="font-size:9px;color:var(--muted);display:block;margin-top:3px;">~${Math.round((day.exercises||[]).length * 8) || 50} min</span>
-        </div>
+    <div class="session-card ${isTodaySession ? 'session-card-today' : ''}" id="day${day.id}" onclick="openSessionSheet('${day.id}')">
+      <div class="session-card-top">
+        <div class="session-letter" style="${letterBg}">${day.id}</div>
+        <span class="badge ${day.badgeClass||'badge-push'}">${day.badge}</span>
       </div>
+      <div class="session-card-name">${day.name}</div>
+      <div class="session-card-meta">${day.day}</div>
+      <div class="session-card-time">~${Math.round((day.exercises||[]).length * 8) || 50} min</div>
+      ${isTodaySession ? '<div class="session-today-pill">HOY</div>' : ''}
     </div>`  });
 
-  document.getElementById('dayCardsWrap').innerHTML = html;
+  var wrap = document.getElementById('dayCardsWrap');
+  wrap.innerHTML = html;
+  // Move today's session first
+  var todayCard = wrap.querySelector('.session-card-today');
+  if (todayCard && wrap.firstChild !== todayCard) {
+    wrap.insertBefore(todayCard, wrap.firstChild);
+  }
 
   // Store plan for quick card
   window.currentPlan = plan;
@@ -3254,91 +3304,126 @@ function closeExModal() {
 var currentSheetDay = null;
 
 function openSessionSheet(dayId) {
-  console.log('openSessionSheet called with:', dayId, 'userProfile:', !!userProfile);
-  if (!userProfile) { console.log('No userProfile!'); return; }
-  var fullPlan = getRoutinePlan(userProfile.training_place||'casa', userProfile.days_available||3, userProfile.objective||'masa');
-  console.log('fullPlan length:', fullPlan.length, 'looking for:', dayId);
-  try {
+  if (!userProfile) return;
+
+  // Get full plan
+  var place = userProfile.training_place || 'casa';
+  var days = parseInt(userProfile.days_available) || 3;
+  var objective = userProfile.objective || 'masa';
+  var fullPlan = getRoutinePlan(place, days, objective);
+
+  // Find the day
   var day = null;
-  for (var i=0; i<fullPlan.length; i++) { 
-    console.log('checking day', i, fullPlan[i].id, '===', dayId, '?', fullPlan[i].id===dayId);
-    if (fullPlan[i].id===dayId) { day=fullPlan[i]; break; } 
+  for (var i = 0; i < fullPlan.length; i++) {
+    if (fullPlan[i].id === dayId) {
+      day = fullPlan[i];
+      break;
+    }
   }
-  if (!day) { console.log('Day not found!'); return; }
-  console.log('Day found:', day.name, 'exercises:', day.exercises ? day.exercises.length : 'MISSING');
-  } catch(e) { console.error('openSessionSheet error:', e); return; }
+  if (!day) return;
   currentSheetDay = day;
-  var lc = {A:'rgba(195,45,0,0.82)',B:'rgba(24,100,171,0.82)',C:'rgba(46,125,50,0.82)',D:'rgba(123,31,162,0.82)'};
-  var bc = {Push:'badge-push',Pull:'badge-pull',Legs:'badge-legs',Full:'badge-push'};
-  var le = document.getElementById('sheetLetter');
-  le.textContent = day.id; le.style.background = lc[day.id]||lc.A;
+
+  // Letter colors
+  var colors = {A:'rgba(195,45,0,0.82)', B:'rgba(24,100,171,0.82)', C:'rgba(46,125,50,0.82)', D:'rgba(123,31,162,0.82)'};
+  var badgeMap = {Push:'badge-push', Pull:'badge-pull', Legs:'badge-legs', Full:'badge-push', Upper:'badge-push', Lower:'badge-legs'};
+
+  // Populate header
+  var letterEl = document.getElementById('sheetLetter');
+  letterEl.textContent = day.id;
+  letterEl.style.background = colors[day.id] || colors.A;
   document.getElementById('sheetName').textContent = day.name;
-  document.getElementById('sheetMeta').textContent = day.day + ' · ~' + Math.round(day.exercises.length*8) + ' min';
-  var be = document.getElementById('sheetBadge');
-  be.textContent = day.badge; be.className = 'badge '+(bc[day.badge]||'badge-push');
-  document.getElementById('sheetWarmup').innerHTML = '🔥 <strong>Calentamiento:</strong> '+(day.warmup||'');
+  document.getElementById('sheetMeta').textContent = day.day + ' · ~' + Math.round(day.exercises.length * 8) + ' min';
+  var badgeEl = document.getElementById('sheetBadge');
+  badgeEl.textContent = day.badge;
+  badgeEl.className = 'badge ' + (badgeMap[day.badge] || 'badge-push');
+  document.getElementById('sheetWarmup').innerHTML = '<strong>🔥 Calentamiento:</strong> ' + (day.warmup || '');
+
+  // Build exercise list
   var list = document.getElementById('sheetExList');
   list.innerHTML = '';
-  day.exercises.forEach(function(ex, i) {
-    var exKey = day.id+'-'+ex.id;
-    var restSecs = parseInt(ex.rest)||90;
+
+  day.exercises.forEach(function(ex, idx) {
+    var exKey = day.id + '-' + ex.id;
+    var restSecs = parseInt(ex.rest) || 90;
+
     var div = document.createElement('div');
-    div.className = 'sheet-ex'; div.dataset.exKey = exKey;
+    div.className = 'sheet-ex';
+    div.dataset.exKey = exKey;
+
     div.innerHTML =
-      '<div class="sheet-ex-num">'+(i+1)+'</div>'+
-      '<div class="sheet-ex-info">'+
-        '<div class="sheet-ex-name">'+ex.name+'</div>'+
-        (ex.note?'<div class="sheet-ex-note">'+ex.note+'</div>':'')+
-        '<div class="sheet-ex-start">▶ '+(ex.start||'')+'</div>'+
-      '</div>'+
-      '<div class="sheet-ex-right">'+
-        '<div class="sheet-ex-sr">'+ex.series+'x'+ex.target+'</div>'+
-        '<div class="sheet-ex-inputs">'+
-          '<div class="sheet-ex-field"><input class="sheet-ex-input sheet-reps" type="number" min="1" max="99" placeholder="—" data-target="'+ex.target+'"><div class="sheet-ex-unit">reps</div></div>'+
-          '<div class="sheet-ex-field"><input class="sheet-ex-input sheet-weight" type="number" min="0" max="200" step="0.5" placeholder="—"><div class="sheet-ex-unit">kg</div></div>'+
-        '</div>'+
-        '<div class="sheet-ex-rec" id="sheet-rec-'+exKey+'"></div>'+
-        '<button class="sheet-timer-btn" onclick="event.stopPropagation();startRestTimer('+restSecs+')">⏱ '+ex.rest+'</button>'+
+      '<div class="sheet-ex-num">' + (idx + 1) + '</div>' +
+      '<div class="sheet-ex-info">' +
+        '<div class="sheet-ex-name">' + ex.name + '</div>' +
+        (ex.note ? '<div class="sheet-ex-note">' + ex.note + '</div>' : '') +
+        '<div class="sheet-ex-start">▶ ' + (ex.start || '') + '</div>' +
+      '</div>' +
+      '<div class="sheet-ex-right">' +
+        '<div class="sheet-ex-sr">' + ex.series + '×' + ex.target + '</div>' +
+        '<div class="sheet-ex-inputs">' +
+          '<div class="sheet-ex-field">' +
+            '<input class="sheet-ex-input sheet-reps" type="number" min="1" max="99" placeholder="—" data-target="' + ex.target + '" data-exkey="' + exKey + '">' +
+            '<div class="sheet-ex-unit">reps</div>' +
+          '</div>' +
+          '<div class="sheet-ex-field">' +
+            '<input class="sheet-ex-input sheet-weight" type="number" min="0" max="200" step="0.5" placeholder="—" data-exkey="' + exKey + '">' +
+            '<div class="sheet-ex-unit">kg</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="sheet-ex-rec" id="srec-' + exKey + '"></div>' +
+        '<button class="sheet-timer-btn" onclick="event.stopPropagation();startRestTimer(' + restSecs + ')">⏱ ' + ex.rest + '</button>' +
       '</div>';
+
     div.querySelectorAll('.sheet-ex-input').forEach(function(inp) {
-      inp.addEventListener('input', function() { updateSheetRec(div, exKey); });
+      inp.addEventListener('input', function() {
+        var reps = parseInt(div.querySelector('.sheet-reps').value) || 0;
+        var weight = parseFloat(div.querySelector('.sheet-weight').value) || 0;
+        var target = parseInt(div.querySelector('.sheet-reps').dataset.target) || 12;
+        var rec = document.getElementById('srec-' + exKey);
+        if (!rec) return;
+        if (!reps && !weight) { rec.textContent = ''; return; }
+        if (reps >= target && weight > 0) {
+          rec.textContent = '↑ subí a ' + (weight + 1.25).toFixed(2).replace(/\.?0+$/, '') + 'kg';
+          rec.style.color = 'var(--green)';
+        } else if (reps > 0) {
+          rec.textContent = 'llegá a ' + target + ' reps';
+          rec.style.color = 'var(--amber)';
+        } else {
+          rec.textContent = '';
+        }
+      });
     });
+
     list.appendChild(div);
   });
-  var sheet = document.getElementById('sessionSheet');
-  console.log('Sheet element:', sheet ? 'found' : 'NOT FOUND');
-  if (!sheet) return;
-  sheet.classList.add('show');
-  document.body.style.overflow = 'hidden';
-  var card = document.getElementById('sessionSheetCard');
-  var sy = 0;
-  card.addEventListener('touchstart', function(e){sy=e.touches[0].clientY;},{passive:true});
-  card.addEventListener('touchmove', function(e){if(e.touches[0].clientY-sy>80)closeSessionSheet();},{passive:true});
-}
 
-function updateSheetRec(div, exKey) {
-  var reps = parseInt(div.querySelector('.sheet-reps').value)||0;
-  var weight = parseFloat(div.querySelector('.sheet-weight').value)||0;
-  var target = parseInt(div.querySelector('.sheet-reps').dataset.target)||12;
-  var rec = document.getElementById('sheet-rec-'+exKey);
-  if (!rec) return;
-  if (!reps && !weight) { rec.textContent=''; return; }
-  if (reps>=target && weight>0) { rec.textContent='subí a '+(weight+1.25).toFixed(2).replace(/\.?0+$/,'')+'kg'; rec.style.color='var(--green)'; }
-  else if (reps>0) { rec.textContent='llegá a '+target+' reps'; rec.style.color='var(--amber)'; }
-  else rec.textContent='';
+  // Show sheet
+  var sheet = document.getElementById('sessionSheet');
+  if (!sheet) return;
+  sheet.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  requestAnimationFrame(function() {
+    sheet.classList.add('show');
+  });
+
+  // Swipe to close
+  var card = document.getElementById('sessionSheetCard');
+  var startY = 0;
+  card.ontouchstart = function(e) { startY = e.touches[0].clientY; };
+  card.ontouchmove = function(e) { if (e.touches[0].clientY - startY > 80) closeSessionSheet(); };
 }
 
 async function saveSessionSheet() {
   if (!currentSheetDay) return;
   var day = currentSheetDay;
   var rows = document.getElementById('sheetExList').querySelectorAll('.sheet-ex');
-  var data = {date:new Date().toLocaleDateString('es-ES'),dayId:day.id,exercises:[]};
-  rows.forEach(function(row,i) {
-    var r=row.querySelector('.sheet-reps').value, w=row.querySelector('.sheet-weight').value;
-    if (r||w) data.exercises.push({id:day.exercises[i].id,name:day.exercises[i].name,reps:r,weight:w});
+  var data = { date: new Date().toLocaleDateString('es-ES'), dayId: day.id, exercises: [] };
+  rows.forEach(function(row, i) {
+    var r = row.querySelector('.sheet-reps').value;
+    var w = row.querySelector('.sheet-weight').value;
+    if (r || w) data.exercises.push({ id: day.exercises[i].id, name: day.exercises[i].name, reps: r, weight: w });
   });
-  await dbSet('sessions-'+day.id, data);
-  if (navigator.vibrate) navigator.vibrate([40,20,40]);
+  await dbSet('sessions-' + day.id, data);
+  if (navigator.vibrate) navigator.vibrate([40, 20, 40]);
   closeSessionSheet();
   showToast('Sesión guardada');
 }
@@ -3347,23 +3432,20 @@ function closeSessionSheet() {
   var sheet = document.getElementById('sessionSheet');
   var card = document.getElementById('sessionSheetCard');
   if (!sheet) return;
-  card.style.transition = 'transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94)';
-  card.style.transform = 'translateY(100%)';
+  sheet.classList.remove('show');
   setTimeout(function() {
-    sheet.classList.remove('show');
-    card.style.transform=''; card.style.transition='';
-    document.body.style.overflow='';
-    currentSheetDay=null;
-  }, 350);
+    sheet.style.display = 'none';
+    document.body.style.overflow = '';
+    currentSheetDay = null;
+  }, 400);
 }
-
 
 // Get local day of week reliably
 function getLocalDay() {
   var now = new Date();
-  var local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
-  return local.getDay();
+  return now.getDay();
 }
+
 
 // ============ MAIN INIT ============
 async function init() {
