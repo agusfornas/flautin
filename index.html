@@ -790,6 +790,7 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
 /* === FINAL FORCE === */
 .day-card { border-left: none !important; }
 .day-card.today-card { border-left: none !important; border-color: rgba(255,78,0,0.35) !important; }
+.day-card.today-session { border-left: none !important; box-shadow: 0 8px 32px rgba(46,125,50,0.15), inset 0 1px 0 rgba(255,255,255,0.6), inset 0 0 6px 3px rgba(255,255,255,0.25) !important; }
 
 </style>
 </head>
@@ -1883,7 +1884,7 @@ async function setQuickCard() {
     const todayCard = document.getElementById('day' + todaySession.id);
     if (todayCard) {
       todayCard.style.order = '-1';
-      todayCard.style.borderLeft = '4px solid #2e7d32';
+      todayCard.classList.add('today-session');
       // Add today label
       const existingLabel = todayCard.querySelector('.today-label');
       if (!existingLabel) {
@@ -2745,8 +2746,7 @@ function renderDiet(profile) {
 }
 
 // ============ STRIP CALENDAR ============
-async 
-function getTrainingDays(profile) {
+async function getTrainingDays(profile) {
   if (profile.training_days) {
     return profile.training_days.split(',').map(Number);
   }
