@@ -1675,7 +1675,7 @@ function calcMacros(profile) {
 }
 
 // ============ CALENDAR ============
-async async function renderCalendar() {
+async function renderCalendar() {
   const sessions = await dbGet('quick-sessions') || [];
   const sessionDays = new Set(sessions.map(s => s.date));
 
