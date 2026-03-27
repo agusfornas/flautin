@@ -2839,7 +2839,7 @@ function renderDiet(profile) {
 }
 
 // ============ STRIP CALENDAR ============
-async function getTrainingDays(profile) {
+function getTrainingDays(profile) {
   if (profile.training_days) {
     return profile.training_days.split(',').map(Number);
   }
