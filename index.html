@@ -1940,12 +1940,13 @@ async function setQuickCard() {
     const rh = document.getElementById('restHero');
     if (th) th.style.display = 'none';
     if (rh) {
-      rh.style.display = 'flex';
+      rh.style.cssText = 'display:flex !important; flex:1;';
       const rhMsg = document.getElementById('restHeroMsg');
       const rhSub = document.getElementById('restHeroSub');
       if (rhMsg) rhMsg.textContent = 'Hoy descansás';
       if (rhSub) rhSub.textContent = 'El cuerpo trabaja aunque vos no.';
     }
+    if (th) th.style.cssText = 'display:none !important;';
 
     // Check if yesterday was also rest
     const yesterday = new Date();
@@ -3323,6 +3324,7 @@ init();
 
   function openMenu() {
     isOpen = true;
+    document.body.style.overflow = 'hidden';
     const cx = window.innerWidth / 2;
     const cy = window.innerHeight / 2;
     const tx = window.innerWidth - 24 - 29;
@@ -3339,6 +3341,7 @@ init();
 
   function closeMenu() {
     isOpen = false;
+    document.body.style.overflow = '';
     trigger.style.transform = '';
     overlay.classList.remove('open');
     trigger.classList.remove('open');
