@@ -785,6 +785,12 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
   padding: 10px 14px !important;
 }
 
+
+
+/* === FINAL FORCE === */
+.day-card { border-left: none !important; }
+.day-card.today-card { border-left: none !important; border-color: rgba(255,78,0,0.35) !important; }
+
 </style>
 </head>
 <body>
@@ -2739,61 +2745,7 @@ function renderDiet(profile) {
 }
 
 // ============ STRIP CALENDAR ============
-async function renderCalendar() {
-  const sessions = await dbGet('quick-sessions') || [];
-  const sessionDays = new Set(sessions.map(s => s.date));
-  const sA = await dbGet('sessions-A') || [];
-  const sB = await dbGet('sessions-B') || [];
-  const sC = await dbGet('sessions-C') || [];
-  [...sA,...sB,...sC].forEach(s => sessionDays.add(s.date));
-
-  const now = new Date();
-  const today = now.getDate();
-  const dayNames = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-
-  // Streak
-  let streak = 0;
-  for (let i = 0; i < 60; i++) {
-    const d = new Date(now);
-    d.setDate(d.getDate() - i);
-    if (sessionDays.has(d.toLocaleDateString('es-ES'))) streak++;
-    else if (i > 0) break;
-  }
-
-  // Last 7 days strip
-  let stripHTML = '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px"><div style="display:flex;gap:6px;min-width:max-content;padding:0 2px">';
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date(now);
-    d.setDate(d.getDate() - i);
-    const dateStr = d.toLocaleDateString('es-ES');
-    const isToday = i === 0;
-    const trained = sessionDays.has(dateStr);
-    const dayName = dayNames[d.getDay()];
-    const dayNum = d.getDate();
-    let bg = trained ? 'var(--orange)' : '#e8e5e0';
-    let color = trained ? '#fff' : 'var(--gray)';
-    let border = isToday ? '2px solid var(--orange)' : '2px solid transparent';
-    if (isToday && !trained) { color = 'var(--black)'; }
-    stripHTML += `<div style="display:flex;flex-direction:column;align-items:center;gap:3px;background:${bg};color:${color};border:${border};border-radius:8px;padding:8px 10px;min-width:44px;cursor:default">
-      <span style="font-size:9px;letter-spacing:1px;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-weight:700">${dayName}</span>
-      <span style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;line-height:1">${dayNum}</span>
-      ${trained ? '<span style="font-size:10px">⚡</span>' : '<span style="font-size:10px;opacity:0.3">·</span>'}
-    </div>`;
-  }
-  stripHTML += '</div></div>';
-
-  // Streak badge
-  // Update racha in bento
-  const rachaNum = document.getElementById('rachaNum');
-  const rachaIco = document.getElementById('rachaIco');
-  if (rachaNum) rachaNum.textContent = streak > 0 ? streak : '0';
-  if (rachaIco) rachaIco.textContent = streak > 2 ? '🔥' : streak > 0 ? '✦' : '·';
-
-  document.getElementById('calendarWrap').innerHTML = stripHTML;
-}
-
-// ============ TRAINING DAYS SELECTION ============
-// Store in profile: training_days as comma-separated day numbers (0=sun,1=mon...)
+async 
 function getTrainingDays(profile) {
   if (profile.training_days) {
     return profile.training_days.split(',').map(Number);
@@ -3307,7 +3259,72 @@ init();
   }
 
   draw();
-})();</script>
+})();
+// ===== RADIAL MENU =====
+(function() {
+  const trigger = document.getElementById('menuTrigger');
+  const overlay = document.getElementById('menuOverlay');
+  const items = document.querySelectorAll('.rmenu-item');
+  const triggerIco = document.getElementById('menuTriggerIco');
+  const sectionLabel = document.getElementById('activeSectionLabel');
+  if (!trigger) return;
+  let isOpen = false;
+  const radius = 118;
+  const angleStep = 360 / items.length;
+  const startAngle = -90;
+
+  items.forEach((item, i) => {
+    const angle = (startAngle + angleStep * i) * Math.PI / 180;
+    item.style.setProperty('--tx', Math.cos(angle) * radius + 'px');
+    item.style.setProperty('--ty', Math.sin(angle) * radius + 'px');
+  });
+
+  function openMenu() {
+    isOpen = true;
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+    const tx = window.innerWidth - 24 - 29;
+    const ty = window.innerHeight - 24 - 29;
+    trigger.style.transform = 'translate(' + (cx-tx) + 'px,' + (cy-ty) + 'px)';
+    overlay.classList.add('open');
+    trigger.classList.add('open');
+    triggerIco.textContent = '✕';
+    items.forEach(item => {
+      item.classList.add('open');
+      setTimeout(() => item.classList.add('floating'), 550);
+    });
+  }
+
+  function closeMenu() {
+    isOpen = false;
+    trigger.style.transform = '';
+    overlay.classList.remove('open');
+    trigger.classList.remove('open');
+    triggerIco.textContent = '⊕';
+    items.forEach(item => {
+      item.classList.remove('open');
+      item.classList.remove('floating');
+    });
+  }
+
+  trigger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    isOpen ? closeMenu() : openMenu();
+  });
+  overlay.addEventListener('click', closeMenu);
+  items.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var section = item.dataset.section;
+      var ico = item.dataset.ico;
+      var label = item.dataset.label;
+      if (sectionLabel) sectionLabel.textContent = ico + ' ' + label;
+      showTab(section);
+      closeMenu();
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
