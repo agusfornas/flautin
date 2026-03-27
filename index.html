@@ -382,7 +382,7 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
   display:block;
   animation:liquidIn 0.5s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
 }
-#rutina.active{min-height:100vh;}
+
 .section.leaving{
   animation:liquidOut 0.3s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
 }
@@ -835,6 +835,13 @@ header{background:rgba(246,241,235,0.7);backdrop-filter:blur(10px);-webkit-backd
 .session-today .sc-name{font-size:17px;}
 .sc-sub{font-size:9px;color:var(--gray);margin-top:2px;}
 .sc-time{font-size:9px;color:var(--muted);font-weight:700;}
+
+
+/* Prevent empty scroll on home */
+html, body { height: 100%; }
+#app.visible { height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+.content { overflow-y: auto; flex: 1; }
+.section { height: 100%; overflow-y: auto; }
 
 </style>
 </head>
@@ -1719,7 +1726,8 @@ async function renderCalendar() {
   const sA = await dbGet('sessions-A') || [];
   const sB = await dbGet('sessions-B') || [];
   const sC = await dbGet('sessions-C') || [];
-  [...sA,...sB,...sC].forEach(s => sessionDays.add(s.date));
+  const allSess = [...(Array.isArray(sA)?sA:[sA?sA:null]), ...(Array.isArray(sB)?sB:[sB?sB:null]), ...(Array.isArray(sC)?sC:[sC?sC:null])].filter(Boolean);
+  allSess.forEach(s => { if(s && s.date) sessionDays.add(s.date); });
 
   const now = new Date();
   const year = now.getFullYear();
@@ -1952,9 +1960,10 @@ async function setQuickCard() {
     const sA = await dbGet('sessions-A') || [];
     const sB = await dbGet('sessions-B') || [];
     const sC = await dbGet('sessions-C') || [];
+    const _toArr = x => Array.isArray(x) ? x : (x && x.date ? [x] : []);
     const allDates = new Set([
-      ...quickSessions.map(s=>s.date),
-      ...sA.map(s=>s.date), ...sB.map(s=>s.date), ...sC.map(s=>s.date)
+      ..._toArr(quickSessions).map(s=>s.date),
+      ..._toArr(sA).map(s=>s.date), ..._toArr(sB).map(s=>s.date), ..._toArr(sC).map(s=>s.date)
     ]);
     if (!allDates.has(yesterdayStr)) {
       sub.textContent = 'Ayer tampoco entrenaste. ¿Querés ponerte al día?';
